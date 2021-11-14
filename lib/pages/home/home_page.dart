@@ -193,19 +193,6 @@ class HomePage extends StatelessWidget {
       );
     }
 
-    Widget newArrivals() {
-      return Container(
-        margin: EdgeInsets.only(top: 14),
-        child: Column(
-          children: [
-            ProductTile(),
-            ProductTile(),
-            ProductTile(),
-          ],
-        ),
-      );
-    }
-
     return ListView(
       children: [
         header(),
@@ -215,6 +202,19 @@ class HomePage extends StatelessWidget {
         newArrivalsTitle(),
         newArrivals(),
       ],
+    );
+  }
+
+  Widget newArrivals() {
+    return Container(
+      margin: EdgeInsets.only(top: 14),
+      child: Column(
+        children: [
+          ProductTile(),
+          ProductTile(),
+          ProductTile(),
+        ],
+      ),
     );
   }
 }
