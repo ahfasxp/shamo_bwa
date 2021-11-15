@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shamo_bwa/theme.dart';
+import 'package:shamo_bwa/widgets/chat_bubble.dart';
 
 class DetailChatPage extends StatelessWidget {
   const DetailChatPage({Key? key}) : super(key: key);
@@ -47,46 +48,130 @@ class DetailChatPage extends StatelessWidget {
       );
     }
 
-    Widget chatInput() {
+    Widget productPreview() {
       return Container(
-        margin: EdgeInsets.all(20),
+        width: 225,
+        height: 74,
+        margin: EdgeInsets.only(bottom: 20),
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: backgroundColor5,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: primaryColor,
+          ),
+        ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Container(
-                height: 45,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                ),
-                decoration: BoxDecoration(
-                  color: backgroundColor4,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Center(
-                  child: TextFormField(
-                    decoration: InputDecoration.collapsed(
-                      hintText: 'Type Message...',
-                      hintStyle: subtitleTextStyle,
-                    ),
-                  ),
-                ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                'assets/images/image_shoes.png',
+                width: 54,
+                height: 54,
               ),
             ),
             SizedBox(
-              width: 20,
+              width: 10,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'COURT VISIO COURT VISIO',
+                    style: primaryTextStyle,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    '\$57,15',
+                    style: priceTextStyle.copyWith(
+                      fontSize: 14,
+                      fontWeight: medium,
+                    ),
+                  ),
+                ],
+              ),
             ),
             Image.asset(
-              'assets/images/button_send.png',
-              width: 45,
+              'assets/images/button_close.png',
+              width: 22,
+              height: 22,
             ),
           ],
         ),
       );
     }
 
+    Widget chatInput() {
+      return Container(
+        margin: EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            productPreview(),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 45,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                    ),
+                    decoration: BoxDecoration(
+                      color: backgroundColor4,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child: TextFormField(
+                        decoration: InputDecoration.collapsed(
+                          hintText: 'Type Message...',
+                          hintStyle: subtitleTextStyle,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Image.asset(
+                  'assets/images/button_send.png',
+                  width: 45,
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+
+    Widget content() {
+      return ListView(
+        padding: EdgeInsets.symmetric(
+          horizontal: defaultMargin,
+        ),
+        children: [
+          ChatBubble(
+            isSender: true,
+            text: 'Hi, This item is still available?',
+            hasProduct: true,
+          ),
+          ChatBubble(
+            isSender: false,
+            text: 'Good night, This item is only available in size 42 and 43',
+          ),
+        ],
+      );
+    }
+
     return Scaffold(
       backgroundColor: backgroundColor3,
       appBar: header(),
+      body: content(),
       bottomNavigationBar: chatInput(),
     );
   }
