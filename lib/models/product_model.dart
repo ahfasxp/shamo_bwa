@@ -47,8 +47,10 @@ class ProductModel {
       'tags': tags,
       'category': category.toJson(),
       'galleries': galleries.map((e) => e.toJson()).toList(),
-      'createdAt': createdAt.toString(),
-      'updatedAt': updatedAt.toString()
+      'created_at': createdAt.toString(),
+      'updated_at': updatedAt.toString()
     };
   }
 }
+
+// class UninitializedProductModel extends ProductModel {}

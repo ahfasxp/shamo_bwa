@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shamo_bwa/models/product_model.dart';
 import 'package:shamo_bwa/theme.dart';
 
 class ChatBubble extends StatelessWidget {
   final String text;
   final bool isSender;
-  final bool hasProduct;
+  final ProductModel? product;
 
-  const ChatBubble(
-      {Key? key,
-      this.text = '',
-      this.isSender = false,
-      this.hasProduct = false})
-      : super(key: key);
+  ChatBubble({this.text = '', this.isSender = false, this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +34,8 @@ class ChatBubble extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    'assets/images/image_shoes.png',
+                  child: Image.network(
+                    product!.galleries[0].url,
                     width: 70,
                   ),
                 ),
@@ -51,14 +47,14 @@ class ChatBubble extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'COURT VISION 2.0 SHOES',
+                        product!.name,
                         style: primaryTextStyle,
                       ),
                       SizedBox(
                         height: 4,
                       ),
                       Text(
-                        '\$57,15',
+                        '\$${product!.price}',
                         style: priceTextStyle.copyWith(
                           fontWeight: medium,
                         ),
@@ -121,7 +117,7 @@ class ChatBubble extends StatelessWidget {
         crossAxisAlignment:
             isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          hasProduct ? productPreview() : SizedBox(),
+          product != null ? productPreview() : SizedBox(),
           Row(
             mainAxisAlignment:
                 isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
