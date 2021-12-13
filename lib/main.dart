@@ -11,7 +11,9 @@ import 'package:shamo_bwa/pages/sign_in_page.dart';
 import 'package:shamo_bwa/pages/sign_up_page.dart';
 import 'package:shamo_bwa/pages/splash_page.dart';
 import 'package:shamo_bwa/providers/auth_provider.dart';
+import 'package:shamo_bwa/providers/cart_provider.dart';
 import 'package:shamo_bwa/providers/product_provider.dart';
+import 'package:shamo_bwa/providers/transaction_provider.dart';
 import 'package:shamo_bwa/providers/wishlist_provider.dart';
 
 void main() {
@@ -34,6 +36,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => WishlistProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TransactionProvider(),
         ),
       ],
       child: MaterialApp(

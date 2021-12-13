@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shamo_bwa/models/product_model.dart';
+import 'package:shamo_bwa/providers/cart_provider.dart';
 import 'package:shamo_bwa/providers/wishlist_provider.dart';
 import 'package:shamo_bwa/theme.dart';
 
@@ -37,6 +38,7 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     WishlistProvider wishlistProvider = Provider.of<WishlistProvider>(context);
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
 
     Future<void> showSuccessDialog() async {
       return showDialog(
@@ -87,7 +89,9 @@ class _ProductPageState extends State<ProductPage> {
                     width: 154,
                     height: 44,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/cart');
+                      },
                       style: TextButton.styleFrom(
                         backgroundColor: primaryColor,
                         shape: RoundedRectangleBorder(
@@ -393,6 +397,7 @@ class _ProductPageState extends State<ProductPage> {
                       height: 54,
                       child: TextButton(
                         onPressed: () {
+                          cartProvider.addCart(widget.product);
                           showSuccessDialog();
                         },
                         style: TextButton.styleFrom(
