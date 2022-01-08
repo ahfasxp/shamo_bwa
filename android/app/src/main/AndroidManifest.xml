@@ -2,7 +2,7 @@
     package="com.example.shamo_bwa">
    <application
         android:label="shamo_bwa"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
