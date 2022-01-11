@@ -9,12 +9,15 @@ import 'package:shamo_bwa/pages/home/main_page.dart';
 import 'package:shamo_bwa/pages/sign_in_page.dart';
 import 'package:shamo_bwa/pages/sign_up_page.dart';
 import 'package:shamo_bwa/pages/splash_page.dart';
+import 'package:shamo_bwa/preferences/preferences_helper.dart';
 import 'package:shamo_bwa/providers/auth_provider.dart';
 import 'package:shamo_bwa/providers/cart_provider.dart';
 import 'package:shamo_bwa/providers/page_provider.dart';
+import 'package:shamo_bwa/providers/preferences_provider.dart';
 import 'package:shamo_bwa/providers/product_provider.dart';
 import 'package:shamo_bwa/providers/transaction_provider.dart';
 import 'package:shamo_bwa/providers/wishlist_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,6 +51,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => PageProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => PreferencesProvider(
+            preferencesHelper: PreferencesHelper(
+              sharedPreferences: SharedPreferences.getInstance(),
+            ),
+          ),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

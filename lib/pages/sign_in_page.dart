@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shamo_bwa/providers/auth_provider.dart';
+import 'package:shamo_bwa/providers/preferences_provider.dart';
 import 'package:shamo_bwa/theme.dart';
 import 'package:shamo_bwa/widgets/loading_button.dart';
 
@@ -19,6 +20,8 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    PreferencesProvider preferencesProvider =
+        Provider.of<PreferencesProvider>(context);
 
     handleSignIn() async {
       setState(() {
@@ -29,7 +32,10 @@ class _SignInPageState extends State<SignInPage> {
         email: emailController.text,
         password: passwordController.text,
       )) {
-        Navigator.pushNamed(context, '/home');
+        preferencesProvider.loginUser(true);
+        preferencesProvider.setUserEmail(emailController.text);
+        preferencesProvider.setUserPassword(passwordController.text);
+        Navigator.pushReplacementNamed(context, '/home');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

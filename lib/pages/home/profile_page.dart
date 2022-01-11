@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shamo_bwa/models/user_model.dart';
 import 'package:shamo_bwa/providers/auth_provider.dart';
+import 'package:shamo_bwa/providers/preferences_provider.dart';
 import 'package:shamo_bwa/theme.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -10,6 +11,8 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    PreferencesProvider preferencesProvider =
+        Provider.of<PreferencesProvider>(context);
     UserModel user = authProvider.user;
 
     Widget header() {
@@ -50,6 +53,7 @@ class ProfilePage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
+                    preferencesProvider.removeLoginUser();
                     Navigator.pushNamedAndRemoveUntil(
                         context, '/sign-in', (route) => false);
                   },

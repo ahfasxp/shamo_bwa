@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shamo_bwa/providers/auth_provider.dart';
+import 'package:shamo_bwa/providers/preferences_provider.dart';
 import 'package:shamo_bwa/providers/product_provider.dart';
 import 'package:shamo_bwa/theme.dart';
 
@@ -18,8 +20,20 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   getInit() async {
+    PreferencesProvider preferencesProvider =
+        Provider.of<PreferencesProvider>(context, listen: false);
+    AuthProvider authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
+
     await Provider.of<ProductProvider>(context, listen: false).getProducts();
-    Navigator.pushNamed(context, '/sign-in');
+    if (preferencesProvider.isLogin) {
+      await authProvider.login(
+          email: preferencesProvider.userEmail,
+          password: preferencesProvider.userPassword);
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      Navigator.pushReplacementNamed(context, '/sign-in');
+    }
   }
 
   @override
