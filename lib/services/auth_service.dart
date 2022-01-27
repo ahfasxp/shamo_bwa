@@ -32,7 +32,7 @@ class AuthService {
 
       return user;
     } else {
-      throw Exception('Gagal Register');
+      throw Exception('Failed Register');
     }
   }
 
@@ -57,7 +57,46 @@ class AuthService {
 
       return user;
     } else {
-      throw Exception('Gagal Login');
+      throw Exception('Failed Login');
+    }
+  }
+
+  Future<bool> logout({required String token}) async {
+    var url = '$baseUrl/logout';
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    var response = await http.post(Uri.parse(url), headers: headers);
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('Failed Logout');
+    }
+  }
+
+  Future<UserModel> getUser({required String token}) async {
+    var url = '$baseUrl/user';
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    var response = await http.post(Uri.parse(url), headers: headers);
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body)['data'];
+      UserModel user = UserModel.fromJson(data);
+
+      return user;
+    } else {
+      throw Exception('Failed to load user data');
     }
   }
 }

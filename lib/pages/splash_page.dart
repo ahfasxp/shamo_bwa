@@ -26,10 +26,7 @@ class _SplashPageState extends State<SplashPage> {
         Provider.of<AuthProvider>(context, listen: false);
 
     await Provider.of<ProductProvider>(context, listen: false).getProducts();
-    if (preferencesProvider.isLogin) {
-      await authProvider.login(
-          email: preferencesProvider.userEmail,
-          password: preferencesProvider.userPassword);
+    if (await authProvider.isLogin(token: preferencesProvider.userToken)) {
       Navigator.pushReplacementNamed(context, '/home');
     } else {
       Navigator.pushReplacementNamed(context, '/sign-in');

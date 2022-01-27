@@ -32,9 +32,7 @@ class _SignInPageState extends State<SignInPage> {
         email: emailController.text,
         password: passwordController.text,
       )) {
-        preferencesProvider.loginUser(true);
-        preferencesProvider.setUserEmail(emailController.text);
-        preferencesProvider.setUserPassword(passwordController.text);
+        preferencesProvider.setUserToken(authProvider.user.token!);
         Navigator.pushReplacementNamed(context, '/home');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

@@ -52,10 +52,13 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    preferencesProvider.removeLoginUser();
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, '/sign-in', (route) => false);
+                  onTap: () async {
+                    if (await authProvider.logout(
+                        token: preferencesProvider.userToken)) {
+                      preferencesProvider.removeUserToken();
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/sign-in', (route) => false);
+                    }
                   },
                   child: Image.asset(
                     'assets/images/button_exit.png',

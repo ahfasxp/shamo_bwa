@@ -7,10 +7,10 @@ class AuthProvider extends ChangeNotifier {
 
   UserModel get user => _user;
 
-  set user(UserModel user) {
-    _user = user;
-    notifyListeners();
-  }
+  // set user(UserModel user) {
+  //   _user = user;
+  //   notifyListeners();
+  // }
 
   Future<bool> register(
       {required String name,
@@ -22,6 +22,7 @@ class AuthProvider extends ChangeNotifier {
           name: name, username: username, email: email, password: password);
 
       _user = user;
+      notifyListeners();
       return true;
     } catch (e) {
       print(e);
@@ -35,6 +36,30 @@ class AuthProvider extends ChangeNotifier {
           await AuthService().login(email: email, password: password);
 
       _user = user;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> logout({required String token}) async {
+    try {
+      await AuthService().logout(token: token);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> isLogin({required String token}) async {
+    try {
+      UserModel user = await AuthService().getUser(token: token);
+
+      _user = user;
+      notifyListeners();
       return true;
     } catch (e) {
       print(e);

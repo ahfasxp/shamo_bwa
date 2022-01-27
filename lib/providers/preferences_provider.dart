@@ -5,54 +5,24 @@ class PreferencesProvider extends ChangeNotifier {
   PreferencesHelper preferencesHelper;
 
   PreferencesProvider({required this.preferencesHelper}) {
-    _getLogin();
-    _getUserEmail();
-    _getUserPassword();
+    _getUserToken();
   }
 
-  // Shared Preference isLogin
-  bool _isLogin = false;
-  bool get isLogin => _isLogin;
+  // Shared Preference userToken
+  late String _userToken;
+  String get userToken => _userToken;
 
-  void _getLogin() async {
-    _isLogin = await preferencesHelper.isLogin;
+  void _getUserToken() async {
+    _userToken = await preferencesHelper.getUserToken;
     notifyListeners();
   }
 
-  void loginUser(bool value) {
-    preferencesHelper.setLogin(value);
-    _getLogin();
+  void setUserToken(String token) {
+    preferencesHelper.setUserToken(token);
+    _getUserToken();
   }
 
-  void removeLoginUser() {
-    preferencesHelper.removeLogin();
-  }
-
-  // Shared Preference userEmail
-  late String _userEmail;
-  String get userEmail => _userEmail;
-
-  void _getUserEmail() async {
-    _userEmail = await preferencesHelper.getUserEmail;
-    notifyListeners();
-  }
-
-  void setUserEmail(String email) {
-    preferencesHelper.setUserEmail(email);
-    _getUserEmail();
-  }
-
-  // Shared Preference userPassword
-  late String _userPassword;
-  String get userPassword => _userPassword;
-
-  void _getUserPassword() async {
-    _userPassword = await preferencesHelper.getUserPassword;
-    notifyListeners();
-  }
-
-  void setUserPassword(String password) {
-    preferencesHelper.setUserPassword(password);
-    _getUserPassword();
+  void removeUserToken() {
+    preferencesHelper.removeUserToken();
   }
 }
