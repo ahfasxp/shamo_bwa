@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 import 'package:shamo_bwa/providers/auth_provider.dart';
 import 'package:shamo_bwa/theme.dart';
@@ -341,37 +342,38 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       backgroundColor: backgroundColor1,
       body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
+        child: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (overscroll) {
+            overscroll.disallowGlow();
+            return true;
+          },
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: Column(
               children: [
-                Spacer(),
-                footer(),
-              ],
-            ),
-            NotificationListener<OverscrollIndicatorNotification>(
-              onNotification: (overscroll) {
-                overscroll.disallowGlow();
-                return true;
-              },
-              child: SingleChildScrollView(
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      header(),
-                      nameInput(),
-                      usernameInput(),
-                      emailInput(),
-                      passwordInput(),
-                      isLoading ? LoadingButton() : signUpButton(),
-                    ],
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        header(),
+                        nameInput(),
+                        usernameInput(),
+                        emailInput(),
+                        passwordInput(),
+                        isLoading ? LoadingButton() : signUpButton(),
+                        SizedBox(height: 20),
+                      ],
+                    ),
                   ),
                 ),
-              ),
+                KeyboardVisibilityBuilder(
+                    builder: (context, isKeyboardVisible) {
+                  return isKeyboardVisible ? SizedBox() : footer();
+                }),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
